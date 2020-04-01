@@ -8,7 +8,7 @@ const audit = {
 
     // What is the value of `this` when we call fn()?
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = 'global window object';
 
     return result;
   },
@@ -31,7 +31,7 @@ const audit = {
 
     // What is the value of `this` when we call data.verify())?
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = 'data';
 
     return result;
   },
@@ -40,7 +40,7 @@ const audit = {
 
 
 
-  
+
 
 
   exerciseC() {
@@ -54,7 +54,7 @@ const audit = {
 
     // What is the value of `this` when we call dog.bark();
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = 'global window object';
 
     return result;
   },
@@ -93,10 +93,20 @@ const audit = {
     greetingGenerator();
 
     const result = [{
-      // 'ADD YOUR RESULT HERE';
+      D: 'welcome'
+      A: 'hi',
+      B: 'hi',
+      C: 'hi',
     }];
 
     return result;
+    //D logs first as it is above first function called
+    //at this point greeting is still welcome
+    //then a because it is right after first conditionals of greetingGenerator. It is hi because
+    //greeting is assigned to hi but not ===
+    //then b logs because it is within next called function where greeting is assigned to hi
+    // then c is last, logged after new Greeting. value is still hi
+
   },
 
 
@@ -123,13 +133,19 @@ const audit = {
     // Log D: shoe
 
     const result = [{
-      // 'ADD YOUR RESULT HERE';
+      A: 'heel',
+      C: 'heel',
+      B: 'boot',
+      D: 'boot'
     }];
 
     return result;
   },
 
-
+//A is first and heel because it is logged after var is first defined.
+//then C is logged because it is right above function called. Still heel.
+//then B because it logs within function called. At this point reassigned to boot
+//then D, still boot, logs after function is called
 
 
 
@@ -174,7 +190,7 @@ const audit = {
     // e.g.
     // ['Beckon', 'El Five', 'ChoLon', 'Super Mega Bien']
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = restaurants.map(restaurant => restaurant.name);
 
     return result;
   },
@@ -220,7 +236,7 @@ const audit = {
     ];
 
     // Return an array of objects that include just the name of the restaurant and whether takeout is available
-    
+
     // e.g.
     // [
     //    { restaurant: 'Beckon', takeOut: false },
@@ -228,7 +244,11 @@ const audit = {
     //    ..etc
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = restaurants.map(restaurant => {
+      return { restaurant: restaurant.name,
+             takeOut: restaurant.takeout };
+      }
+    })
 
     return result;
   },
@@ -282,14 +302,25 @@ const audit = {
     //    'Asian Fusion': ['ChoLon']
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
-
+    const result = restaurants.reduce((newObj, restaurant) => {
+      if(!newObj[restaurant.cuisine]) {
+        newObj[restaurant.cuisine] = [];
+       }
+      newObj[restaurant.cuisine].push(restaurant.name);
+      return newObj;
+    }, {});
     return result;
   },
 
+  //use reduce because i am returning an object.
+  //reduce over restaurants. newObj is the acc, restaurant is the element.  Write a conditional to make my object key. If it does not exist create it
+  //and assign it to an empty array.
+  //then push restaurant names into the acc.
+  //return acc
+
   exerciseBonus() {
 
-    // There is a war and nobody knows - the alphabet war! 
+    // There is a war and nobody knows - the alphabet war!
     // There are two groups of hostile letters. The tension between left side letters and right side letters was too high and the war began.
 
     // Write a function that accepts fight string consists of only small letters and return who wins the fight. When the left side wins return 'Left side wins!', when the right side wins return 'Right side wins!', in other case return 'Let's fight again!'.
@@ -329,7 +360,7 @@ const audit = {
       four: alphabetWar('wwwwwwz')
     };
 
-    return result;    
+    return result;
   }
 };
 
